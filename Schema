@@ -1,0 +1,55 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Get Repository Content",
+    "description": "Get the source code content of an entire GitHub repository.",
+    "version": "v0.0.1"
+  },
+  "servers": [
+    {
+      "url": "https://github-reader.onrender.com"
+    }
+  ],
+  "paths": {
+    "/get-repo-content/": {
+      "post": {
+        "description": "Get the source code content of an entire GitHub repository.",
+        "operationId": "Get Repository Content",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetRepositoryContentRequestSchema"
+              }
+            }
+          },
+          "required": true
+        },
+        "deprecated": false,
+        "x-openai-isConsequential": true
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GetRepositoryContentRequestSchema": {
+        "type": "object",
+        "required": ["git_url"],
+        "properties": {
+          "git_url": {
+            "type": "string",
+            "title": "git_url",
+            "description": "The GitHub repository URL from user’s input."
+          },
+          "github_token": {
+            "type": "string",
+            "title": "github_token",
+            "description": "Optional GitHub access token to authenticate for private repositories."
+          }
+        },
+        "title": "Get Repository Content Request Schema"
+      }
+    }
+  }
+}
