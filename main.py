@@ -14,7 +14,7 @@ class GitRepo(BaseModel):
 
 @app.get("/")
 async def get_main():
-    return {"message": "Welcome to Code Reader! V1"}
+    return {"message": "Welcome to Code Reader! V2"}
 
 @app.post("/get-repo-content/")
 async def get_repo_content(repo: GitRepo):
@@ -46,10 +46,10 @@ async def clone_repo_async(git_url, repo_dir, github_token=None):
 
 def clone_repo(git_url, repo_dir, github_token=None):
     if github_token:
-        os.environ['GIT_ASKPASS'] = 'echo'
-        os.environ['GIT_TERMINAL_PROMPT'] = '0'
-        os.environ['GIT_HTTP_USER_AGENT'] = f'git/2.26.2 (github-token {github_token})'
-    Repo.clone_from(git_url, repo_dir, env={'GIT_HTTP_USER_AGENT': os.environ.get('GIT_HTTP_USER_AGENT', '')})
+        modified_git_url = git_url.replace('https://', f'https://{github_token}@')
+    else:
+        modified_git_url = git_url
+    Repo.clone_from(modified_git_url, repo_dir)
 
 async def read_all_files_async(directory):
     loop = asyncio.get_event_loop()
