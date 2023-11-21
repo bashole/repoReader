@@ -14,7 +14,7 @@ class GitRepo(BaseModel):
 
 @app.get("/")
 async def get_main():
-    return {"message": "Welcome to Code Reader! V2"}
+    return {"message": "Welcome to Code Reader! V3"}
 
 @app.post("/get-repo-content/")
 async def get_repo_content(repo: GitRepo):
@@ -33,7 +33,7 @@ async def get_repo_content(repo: GitRepo):
 
         content = await read_all_files_async(repo_dir)
         shutil.rmtree(temp_dir)
-        return {"content": content[:50000]}
+        return {"content": content[:500000]}
 
     except Exception as e:
         if os.path.exists(temp_dir):
