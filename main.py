@@ -16,7 +16,7 @@ project_states = {}
 
 @app.get("/")
 async def get_main():
-    return {"message": "Welcome to Code Reader! V6"}
+    return {"message": "Welcome to Code Reader! V7"}
 
 @app.post("/get-repo-content/")
 async def get_repo_content(repo: GitRepo):
@@ -61,7 +61,7 @@ def clone_repo(git_url, repo_dir, github_token=None):
         modified_git_url = git_url
     Repo.clone_from(modified_git_url, repo_dir)
 
-async def read_batch_files_async(directory, start_index, char_limit=50000):
+async def read_batch_files_async(directory, start_index, char_limit=500000):
     loop = asyncio.get_event_loop()
     return await loop.run_in_executor(None, lambda: read_batch_files(directory, start_index, char_limit))
 
