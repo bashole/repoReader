@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Get Repository Content",
-    "description": "Get the source code content of an entire GitHub repository.",
-    "version": "v0.0.1"
+    "description": "Get the source code content of an entire GitHub repository in batches.",
+    "version": "v0.0.2"
   },
   "servers": [
     {
@@ -13,8 +13,8 @@
   "paths": {
     "/get-repo-content/": {
       "post": {
-        "description": "Get the source code content of an entire GitHub repository.",
-        "operationId": "Get Repository Content",
+        "description": "Get the source code content of an entire GitHub repository in batches.",
+        "operationId": "GetRepositoryContentInBatches",
         "parameters": [],
         "requestBody": {
           "content": {
@@ -25,6 +25,18 @@
             }
           },
           "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "A batch of repository content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepositoryContentResponseSchema"
+                }
+              }
+            }
+          }
         },
         "deprecated": false,
         "x-openai-isConsequential": true
@@ -49,6 +61,21 @@
           }
         },
         "title": "Get Repository Content Request Schema"
+      },
+      "RepositoryContentResponseSchema": {
+        "type": "object",
+        "required": ["content", "end_of_content"],
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "The content of the repository for the current batch."
+          },
+          "end_of_content": {
+            "type": "boolean",
+            "description": "A flag indicating if this batch is the last one."
+          }
+        },
+        "title": "Repository Content Response Schema"
       }
     }
   }
